@@ -1,8 +1,9 @@
-pragma solidity ^0.6.2;
-contract Token{
+pragma solidity ^0.6.0;
+import "@openzeppelin/upgrades/contracts/Initializable.sol";
+contract Token is Initializable{
     string _name;
     string _symbol;
-    bool private _initialized=false;
+    //bool private _initialized=false;
     address _owner;
     uint256[] allTokens;
     mapping(address=>uint256) _balance;
@@ -10,9 +11,8 @@ contract Token{
     mapping(uint256=>address) _rightowner;
     mapping(address=>uint256) noOftokens;
     mapping(address=> mapping(address=>uint256)) _allownce;
-    function initialize() public{
-        require(!_initialized,"Contract has already been initialized");
-        _initialized=true;
+    function initialize() public initializer{
+        
         _name="Armughan";
         _symbol="armu";
         _owner=msg.sender;
@@ -60,6 +60,5 @@ contract Token{
         require(owner==_rightowner[tokenId],"nothing to burn");
         _rightowner[tokenId]=address(0);
         _balance[owner]=noOftokens[owner]-1;
-
     }
 }
